@@ -1,35 +1,28 @@
-// parent class
-class API { 
-    
-    constructor(url) {
+class API {
+    #secure
+    constructor(url, method = 'GET') {
         this.url = url;
-        this.method="GET";
-       
+        this.method = method;
+        this.#secure = url.startsWith('https') ? true : false;
     }
-    
-    isSecure(){
-        if(this.url==="https"){
-            console.log("true");
-            return;
-        }
-        else{
-            console.log("false");
-            return;
-        }
+    isSecure() {
+        return this.#secure;
     }
-    updateUrl(url){
-        this.url=url;
-        console.log(`${this.url}`)
+    updateUrl(newURL) {
+        this.url = newURL;
+        this.#secure = newURL.startsWith('https') ? true : false;
     }
-        // let u=console.log(`${this.url}`);
-        // const m=console.log(`${this.method}`)
 }
-let s1= new API('https://dabkadja');
-console.log(s1.method);
+const s = new API('http://api.com/api/hello')
+console.log(s.isSecure()) // false// false
 
-console.log(s1.isSecure())
-s1.updateUrl("ednefjefherf");
-console.log(s1.url);
+s.updateUrl('https://api.com/api/hello')
+console.log(s.isSecure()) // true
 
+console.log(s.url) // https://api. com/api/hello
+
+console.log(s.method) // GET
+
+console.log(s.secure) // undefined (because private field)
 
 module.exports = { API }
